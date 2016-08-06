@@ -46,22 +46,34 @@ end
   # takes in a word
   # returns the first letter of the word
   # lowercases the first letter of the word
+def first_char(word)
+  word[0].downcase
+end
 
 #polly_wanna
   # takes in a word
   # echoes the original word
   # repeats the original word 3 times
   # returns a string with the word repeated
+def polly_wanna(word)
+  word*3
+end
 
 #count_chars
   # takes in a word
   # returns the number of characters in the word
+def count_chars(word)
+  word.chars.length
+end
 
 #yell
   # takes in a message
   # convert the message to uppercase
   # adds an exclamation point to the end of the message
   # returns the message
+def yell(message)
+  message.upcase + "!"
+end
 
 ## STRETCH ##
 #to_telegram
