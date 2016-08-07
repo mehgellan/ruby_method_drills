@@ -240,6 +240,10 @@ end
   # sorts items by priority ascending (low to high) by default
   # sort order can (optionally) be changed to priority descending
   # the bullet can (optionally) be changed to any symbol
+def compile_agenda(list)
+  sorted_list = list.sort_by do |item| item[:priority] end
+  sorted_list
+end
 
 ##############################
 #### MANIPULATING NUMBERS ####
@@ -251,10 +255,10 @@ end
   # rounds off decimals
 def count_to(n)
   if n > 0
-    (0..n).to_a
+    0.upto(n.floor).to_a
   else
-    (n..0).to_a
-  end  
+    0.downto(n.ceil).to_a
+  end
 end
 
 #is_integer?
@@ -264,6 +268,9 @@ end
   # returns false for non-integer decimals
   # returns false for Float::NAN
   # returns false for non-numbers
+def is_integer?(num)
+  num.class == Fixnum || num.class == Bignum || ( num.is_a?(Float) && !num.nan? && num == num.to_i)
+end
 
 #is_prime?
   # takes in a number and checks if it's prime
@@ -272,12 +279,34 @@ end
   # returns false for numbers divisible by anything but 1 and themselves
   # returns true for prime numbers
   # Hint: google prime numbers!
+def is_prime?(num)
+  if num <= 1 || !is_integer?(num)
+    false
+  else
+    (2...num).each do |i|
+      if num % i == 0
+        return false
+      end
+    end
+    true
+  end
+end
 
 #primes_less_than
   # takes in a number
   # returns an empty array if there are no primes below num
   # does not return the number itself
   # finds all primes less than the given number
+def primes_less_than(num)
+  primes = []
+  (2...num).each do |n|
+    if is_prime?(n)
+      primes.push(n)
+    end
+  end
+  primes
+end
+
 
 ## STRETCH ##
 #iterative_factorial
@@ -286,7 +315,14 @@ end
   # returns NaN for numbers less than 0
   # returns NaN for non-integers
   # calculates and returns the factorial of the input number
-
+def iterative_factorial(num)
+  if num < 0 || !is_integer?(num)
+    return Float::NAN
+  end
+  constant = 1
+  (1..num).each do |i| constant = constant * i end
+  constant
+end
 
 
 ##############################
@@ -297,6 +333,11 @@ end
   # counts how many times each character appears in a string
   # ignores case
   # returns the hash
+def character_count(str)
+  char_count = Hash.new(0)
+  str.downcase.each_char do |c| char_count[c] += 1 end
+  char_count
+end
 
 ## STRETCH ##
 #word_count
@@ -305,8 +346,20 @@ end
   # ignores case
   # ignores characters that are not in the sequence a-z
   # returns a hash with all the words and their counts
+def word_count(str)
+  hash = Hash.new(0)
+  str.downcase.split(" ").each do |word|
+    word = word.gsub(/[^a-z]/i, "")
+    hash[word] += 1
+  end
+  hash
+end
+
 
 ## STRETCH ##
 #most_frequent_word
   # takes in a string
   # finds the word in a string that appears with the most frequency
+def most_frequent_word(str)
+  word_count(str).sort do |a,b| b[1] <=> a[1] end[0][0]
+end
