@@ -80,30 +80,47 @@ end
   # takes in a message
   # replaces periods with ' STOP'
   # returns the updated message
-
+def to_telegram(message)
+  message.gsub!(".", " STOP")
+end
 
 #spell_out
   # takes in a string
   # converts the string to lowercase
   # returns the input string, with characters seperated by dashes
-
+def spell_out(str)
+  arr = str.downcase.split("")
+  arr.join("-")
+end
 
 #seperate
   # takes in a string
   # seperates characters with a custom seperator, when supplied with one
   # seperates characters with dashes (by default)
   # returns the modified string
+def seperate(str, seperator="-")
+  str.split("").join(seperator)
+end
 
 ## STRETCH ##
 #croon
   # seperates word characters with dashes
   # preserves whitespace between words
+def croon(phrase)
+  phrase.split(" ").map do |word| word.split("").join("-") end.join(" ")
+end
 
 #palindrome_word?
   # determines whether a single word is a palindrome
   # ignores case
   # returns true or false
-
+def palindrome_word?(word)
+  word.downcase!
+  if word == word.reverse then true
+  else
+    false
+  end
+end
 
 ## SUPER STRETCH ##
 #palindrome_sentence?
