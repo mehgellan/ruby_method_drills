@@ -150,44 +150,88 @@ end
   # takes in a string
   # counts the spaces in a string
   # returns number of spaces
+# LONG WAY:
+# def count_spaces(str)
+#   count = 0
+#   space = " "
+#   str.each_char do |c|
+#     if c == space
+#       count += 1
+#     end
+#   end
+#   count
+# end
+def count_spaces(str)
+  str.count("/\s/")
+end
 
 #string_lengths
   # takes in an array of strings
   # returns an array containing the lengths of the strings
+def string_lengths(arr)
+  nums = []
+  arr.each { |str| nums << str.length }
+  nums
+end
 
 #remove_falsy_values
   # takes in a list
   # filters out falsy values from a list
   # returns the updated list
+def remove_falsy_values(list)
+  list.reject do |i| i == false || i == nil end
+end
 
 #exclude_last
   # takes in an array or string
   # removes the last item from the array or string
   # returns it
+def exclude_last(something)
+  something[0...-1]
+end
 
 #exclude_first
   # takes in an array or string
   # removes the first item from an array
   # removes the first character from a string
   # returns a new string - does not alter the original input (non-destructive)
+def exclude_first(thing)
+  thing[1..-1]
+end
 
 #exclude_ends
   # takes in an array or string
   # removes the first and last items from an array
   # removes the first and last characters from a string
+def exclude_ends(thing)
+  thing[1...-1]
+end
 
 #select_every_even
   # takes in an array
   # returns a list of even-indexed items from the input
+def select_every_even(arr)
+  even_arr = []
+  arr.map.with_index do |item, i|
+    even_arr.push(item) if i.even?
+  end
+  even_arr
+end
 
 #select_every_odd
   # takes in an array
   # returns a list of odd-indexed items
+def select_every_odd(arr)
+  arr.select.with_index { |item, index| item if index.odd? }
+end
 
 #select_every_n
   # takes in an array
   # returns a list of items at an index evenly divisible by n
   # defaults to an n value of 1
+def select_every_n(arr, n=1)
+  arr.select.with_index do |item, index| item if index%n==0 end
+end
 
 ## STRETCH ##
 #compile_agenda
@@ -205,6 +249,13 @@ end
   # returns an array containing every integer from 0 to n
   # counts up or down
   # rounds off decimals
+def count_to(n)
+  if n > 0
+    (0..n).to_a
+  else
+    (n..0).to_a
+  end  
+end
 
 #is_integer?
   # takes in a number
